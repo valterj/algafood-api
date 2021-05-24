@@ -1,4 +1,4 @@
-package com.algaworks.algafood.repository;
+package com.algaworks.algafood.domain.repository;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ public interface CozinhaRepository {
 
 	Cozinha salvar(Cozinha cozinha);
 
-	void remover(Cozinha cozinha);
+	void remover(Long id);
 
 }

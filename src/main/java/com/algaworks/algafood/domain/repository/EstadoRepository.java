@@ -1,4 +1,4 @@
-package com.algaworks.algafood.repository;
+package com.algaworks.algafood.domain.repository;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ public interface EstadoRepository {
 
 	Estado salvar(Estado estado);
 
-	void remover(Estado estado);
+	void remover(Long id);
 
 }

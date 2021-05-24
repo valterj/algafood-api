@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.algaworks.algafood.AlgafoodApiApplication;
 import com.algaworks.algafood.domain.model.Cozinha;
-import com.algaworks.algafood.repository.CozinhaRepository;
+import com.algaworks.algafood.domain.repository.CozinhaRepository;
 
 public class ConsultaCozinhaMain {
 
@@ -30,7 +30,7 @@ public class ConsultaCozinhaMain {
 		Cozinha cozinha = new Cozinha();
 		cozinha.setId(1L);
 		/*cozinha.setNome("Brasileira teste alteração");*/
-		bean.remover(cozinha);
+		//bean.remover(cozinha);
 		
 		List<Cozinha> cozinhas = bean.listar();
 		cozinhas.forEach(System.out::println);

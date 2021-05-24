@@ -1,4 +1,4 @@
-package com.algaworks.algafood.repository;
+package com.algaworks.algafood.domain.repository;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ public interface CidadeRepository {
 
 	Cidade salvar(Cidade cidade);
 
-	void remover(Cidade cidade);
+	void remover(Long id);
 
 }

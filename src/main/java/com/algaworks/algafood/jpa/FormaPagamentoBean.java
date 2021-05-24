@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.domain.model.FormaPagamento;
-import com.algaworks.algafood.repository.FormaPagamentoRepository;
+import com.algaworks.algafood.domain.repository.FormaPagamentoRepository;
 
 @Component
 public class FormaPagamentoBean {

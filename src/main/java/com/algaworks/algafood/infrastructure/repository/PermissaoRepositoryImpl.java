@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.model.Permissao;
-import com.algaworks.algafood.repository.PermissaoRepository;
+import com.algaworks.algafood.domain.repository.PermissaoRepository;
 
 @Component
 public class PermissaoRepositoryImpl implements PermissaoRepository {
