@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,15 @@ public class RestauranteController {
     
     @GetMapping
     public List<Restaurante> listar() {
-        return this.restauranteRepository.listar();
+        return this.restauranteRepository.findAll();
     }
     
     @GetMapping("/{id}")
     public ResponseEntity<Restaurante> buscar(@PathVariable Long id) {
-        Restaurante restaurante = this.restauranteRepository.buscar(id);
+        Optional<Restaurante> restaurante = this.restauranteRepository.findById(id);
         
-        if (restaurante != null) {
-            return ResponseEntity.ok(restaurante);
+        if (restaurante.isPresent()) {
+            return ResponseEntity.ok(restaurante.get());
         }
         
         return ResponseEntity.notFound().build();
@@ -59,15 +60,25 @@ public class RestauranteController {
    
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante) {
-        Restaurante restauranteAtual = this.restauranteRepository.buscar(id);
+        Optional<Restaurante> restauranteAtual = this.restauranteRepository.findById(id);
         
-        if (restauranteAtual != null) {
-            BeanUtils.copyProperties(restaurante, restauranteAtual);
-            restauranteAtual = this.cadastroRestaurante.salvar(restauranteAtual);
-            return ResponseEntity.ok(restauranteAtual);
+        if (restauranteAtual.isPresent()) {
+            BeanUtils.copyProperties(restaurante, restauranteAtual.get());
+            var restauranteSalvo = this.cadastroRestaurante.salvar(restauranteAtual.get());
+            return ResponseEntity.ok(restauranteSalvo);
         }
         
         return ResponseEntity.notFound().build();
+    }
+    
+    @GetMapping("/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+        return this.restauranteRepository.findComFreteGratis(nome);
+    }
+    
+    @GetMapping("/primeiro")
+    public Optional<Restaurante> findFirst(String nome) {
+        return this.restauranteRepository.buscarPrimeiro();
     }
 
 }
