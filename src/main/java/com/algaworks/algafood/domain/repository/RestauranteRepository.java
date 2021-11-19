@@ -11,6 +11,9 @@ public interface RestauranteRepository
     extends CustomJpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, 
     JpaSpecificationExecutor<Restaurante> {
     
+	/**
+	 * Resolve o problema do N+1
+	 */
     @Query("from Restaurante r join r.cozinha")
     List<Restaurante> findAll();
 
