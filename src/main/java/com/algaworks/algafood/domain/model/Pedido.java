@@ -1,7 +1,7 @@
 package com.algaworks.algafood.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,38 +23,37 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Pedido {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
-    
-    private BigDecimal subtotal;
-    private BigDecimal taxaFrete;
-    private BigDecimal valorTotal;
-    
-    @Embedded
-    private Endereco enderecoEntrega;
-    
-    private StatusPedido status;
-    
-    @CreationTimestamp
-    private LocalDateTime dataCriacao;
-    
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private FormaPagamento formaPagamento;
-    
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Restaurante restaurante;
-    
-    @ManyToOne
-    @JoinColumn(name = "usuario_cliente_id", nullable = false)
-    private Usuario cliente;
-    
-    @OneToMany(mappedBy = "pedido")
-    private List<ItemPedido> itensPedido = new ArrayList<>();
-    
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
+	private Long id;
+
+	private BigDecimal subtotal;
+	private BigDecimal taxaFrete;
+	private BigDecimal valorTotal;
+
+	@Embedded
+	private Endereco enderecoEntrega;
+
+	private StatusPedido status;
+
+	@CreationTimestamp
+	private OffsetDateTime dataCriacao;
+
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private FormaPagamento formaPagamento;
+
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Restaurante restaurante;
+
+	@ManyToOne
+	@JoinColumn(name = "usuario_cliente_id", nullable = false)
+	private Usuario cliente;
+
+	@OneToMany(mappedBy = "pedido")
+	private List<ItemPedido> itensPedido = new ArrayList<>();
 
 }

@@ -56,13 +56,13 @@ public class CidadeController {
     }
 
     @PutMapping("/{id}")
-    public void atualizar(@PathVariable Long id, @RequestBody @Valid Cidade cidade) {
+    public Cidade atualizar(@PathVariable Long id, @RequestBody @Valid Cidade cidade) {
         Cidade cidadeAtual = cadastroCidade.buscar(id);
 
         BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
         try {
-            this.cadastroCidade.salvar(cidadeAtual);
+            return this.cadastroCidade.salvar(cidadeAtual);
         } catch (EstadoNaoEncontradoException e) {
             throw new NegocioException(e.getMessage(), e);
         }
