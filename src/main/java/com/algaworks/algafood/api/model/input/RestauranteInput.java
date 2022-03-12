@@ -7,9 +7,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.algaworks.algafood.core.validation.Multiplo;
+import com.algaworks.algafood.core.validation.TaxaFrete;
+import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
+
 import lombok.Getter;
 import lombok.Setter;
 
+@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome", descricaoObrigatorio = "Frete Grátis")
 @Getter
 @Setter
 public class RestauranteInput {
@@ -19,6 +24,8 @@ public class RestauranteInput {
 
 	@NotNull
 	@PositiveOrZero
+	@TaxaFrete
+	@Multiplo(numero = 1)
 	private BigDecimal taxaFrete;
 
 	@Valid
