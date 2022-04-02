@@ -42,6 +42,8 @@ public class Restaurante {
 	@JoinColumn(nullable = false)
 	private Cozinha cozinha;
 
+	private boolean ativo = true;
+
 	@Embedded
 	private Endereco endereco;
 
@@ -56,5 +58,13 @@ public class Restaurante {
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formasPagamento = new ArrayList<>();
+
+	public void ativar() {
+		setAtivo(true);
+	}
+
+	public void inativar() {
+		setAtivo(false);
+	}
 
 }
