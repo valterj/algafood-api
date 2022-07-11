@@ -81,6 +81,7 @@ public class UsuarioController {
 		usuarioAtual = service.salvar(usuarioAtual);
 
 		return assembler.toModel(usuarioAtual, UsuarioModel.class);
+
 	}
 
 	@DeleteMapping("/{id}")
@@ -92,9 +93,7 @@ public class UsuarioController {
 	@PutMapping("/{id}/senha")
 	@ResponseStatus(NO_CONTENT)
 	public void alterarSenha(@PathVariable Long id, @RequestBody @Valid SenhaInput senhaInput) {
-
 		service.alterarSenha(id, senhaInput.getSenhaAtual(), senhaInput.getNovaSenha());
-
 	}
 
 }

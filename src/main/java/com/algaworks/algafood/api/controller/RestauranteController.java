@@ -1,5 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -102,6 +104,38 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long id) {
 		cadastroRestaurante.inativar(id);
+	}
+
+	@PutMapping("/{id}/abertura")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void abrir(@PathVariable Long id) {
+		cadastroRestaurante.abrir(id);
+	}
+
+	@PutMapping("/{id}/fechamento")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void fechar(@PathVariable Long id) {
+		cadastroRestaurante.fechar(id);
+	}
+
+	@PutMapping("/ativacoes")
+	@ResponseStatus(NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restaurantesId) {
+		try {
+			cadastroRestaurante.ativar(restaurantesId);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restaurantesId) {
+		try {
+			cadastroRestaurante.inativar(restaurantesId);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 
 }
