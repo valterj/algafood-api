@@ -1,9 +1,14 @@
 package com.algaworks.algafood.api.controller;
 
+import static com.algaworks.algafood.infrastructure.repository.spec.PedidoSpec.usandoFiltro;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +24,7 @@ import com.algaworks.algafood.core.modelmapper.GenericInputDisassembler;
 import com.algaworks.algafood.core.modelmapper.GenericModelAssembler;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
+import com.algaworks.algafood.domain.filter.PedidoFilter;
 import com.algaworks.algafood.domain.model.Pedido;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.PedidoRepository;
@@ -42,8 +48,13 @@ public class PedidoController {
 	private EmissaoPedidoService emissaoPedidoService;
 
 	@GetMapping
-	public List<PedidoResumoModel> listar() {
-		return pedidoResumoAssembler.toCollectionModel(pedidoRepository.findAll(), PedidoResumoModel.class);
+	public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro, @PageableDefault(size = 10) Pageable pageable) {
+		Page<Pedido> pedidosPage = pedidoRepository.findAll(usandoFiltro(filtro), pageable);
+
+		List<PedidoResumoModel> pedidosResumoModel = pedidoResumoAssembler.toCollectionModel(pedidosPage.getContent(),
+																							 PedidoResumoModel.class);
+
+		return new PageImpl<>(pedidosResumoModel, pageable, pedidosPage.getTotalElements());
 	}
 
 	@GetMapping("/{codigoPedido}")

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.api.model.ProdutoModel;
@@ -28,9 +29,10 @@ public class RestauranteProdutoController {
 	private GenericModelAssembler<Produto, ProdutoModel> assembler;
 
 	@GetMapping
-	public List<ProdutoModel> listar(@PathVariable Long restauranteId) {
+	public List<ProdutoModel> listar(@PathVariable Long restauranteId,
+									 @RequestParam(required = false) boolean incluirInativos) {
 
-		var produtos = produtoService.buscarPorRestaurante(restauranteId);
+		var produtos = produtoService.buscarPorRestaurante(restauranteId, incluirInativos);
 
 		return assembler.toCollectionModel(produtos, ProdutoModel.class);
 	}

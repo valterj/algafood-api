@@ -38,9 +38,13 @@ public class CadastroProdutoService {
 		return produtoRepository.save(produto);
 	}
 
-	public Collection<Produto> buscarPorRestaurante(Long restauranteId) {
+	public Collection<Produto> buscarPorRestaurante(Long restauranteId, boolean incluirInativos) {
 		var restaurante = restauranteService.buscar(restauranteId);
-		return produtoRepository.findByRestauranteId(restaurante.getId());
+
+		if (incluirInativos)
+			return produtoRepository.findByRestauranteId(restauranteId);
+		else
+			return produtoRepository.findAtivosByRestaurante(restaurante);
 	}
 
 	public Produto buscar(Long restauranteId, Long produtoId) {
