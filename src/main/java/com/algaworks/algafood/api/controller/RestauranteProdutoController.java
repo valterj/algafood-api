@@ -67,7 +67,8 @@ public class RestauranteProdutoController {
 	@PutMapping(value = "/{produtoId}/foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId,
 										  @PathVariable Long produtoId,
-										  @Valid FotoProdutoInput fotoProdutoInput) {
+										  @Valid FotoProdutoInput fotoProdutoInput)
+			throws IOException {
 
 		var produto = produtoService.buscar(restauranteId, produtoId);
 
@@ -81,7 +82,7 @@ public class RestauranteProdutoController {
 									 .tamanho(arquivo.getSize())
 									 .build();
 
-		var fotoSalva = this.catalogoFotoProdutoService.salvar(fotoProduto);
+		var fotoSalva = this.catalogoFotoProdutoService.salvar(fotoProduto, arquivo.getInputStream());
 
 		return this.fotoProdutoModelAssembler.toModel(fotoSalva, FotoProdutoModel.class);
 

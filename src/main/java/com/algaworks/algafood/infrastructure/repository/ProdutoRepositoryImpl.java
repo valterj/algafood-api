@@ -21,4 +21,9 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQueries {
 		return this.manager.merge(foto);
 	}
 
+	@Override
+	public void delete(FotoProduto foto) {
+		this.manager.remove(foto);
+	}
+
 }
