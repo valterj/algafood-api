@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.algaworks.algafood.domain.exception.FotoProdutoNaoEncontradaException;
 import com.algaworks.algafood.domain.model.FotoProduto;
 import com.algaworks.algafood.domain.repository.ProdutoRepository;
 import com.algaworks.algafood.domain.service.FotoStorageService.NovaFoto;
@@ -63,6 +64,25 @@ public class CatalogoFotoProdutoService {
 	private void armazenarFoto(String nomeArquivoAnterior, String nomeArquivoAtual, InputStream dadosArquivo) {
 		NovaFoto novaFoto = NovaFoto.builder().nomeArquivo(nomeArquivoAtual).inputStream(dadosArquivo).build();
 		this.fotoStorage.substituir(nomeArquivoAnterior, novaFoto);
+	}
+
+	public FotoProduto buscar(Long restauranteId, Long produtoId) {
+
+		return this.produtoRepository.findFotoById(restauranteId, produtoId)
+									 .orElseThrow(() -> new FotoProdutoNaoEncontradaException(restauranteId,
+																							  produtoId));
+
+	}
+
+	public void excluir(Long restauranteId, Long produtoId) {
+
+		FotoProduto foto = this.buscar(restauranteId, produtoId);
+
+		this.produtoRepository.delete(foto);
+		this.produtoRepository.flush();
+
+		this.fotoStorage.remover(foto.getNomeArquivo());
+
 	}
 
 }
