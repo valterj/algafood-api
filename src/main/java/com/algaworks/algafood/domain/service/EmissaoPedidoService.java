@@ -1,7 +1,5 @@
 package com.algaworks.algafood.domain.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -14,6 +12,7 @@ import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.FormaPagamentoRepository;
 import com.algaworks.algafood.domain.repository.PedidoRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service

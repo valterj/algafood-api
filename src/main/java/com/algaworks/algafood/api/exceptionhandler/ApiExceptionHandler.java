@@ -14,6 +14,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -42,7 +43,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 																  HttpHeaders headers,
-																  HttpStatus status,
+																  HttpStatusCode status,
 																  WebRequest request) {
 
 		Throwable rootCause = ExceptionUtils.getRootCause(ex);
@@ -64,7 +65,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex,
 																  HttpHeaders headers,
-																  HttpStatus status,
+																  HttpStatusCode status,
 																  WebRequest request) {
 
 		String path = joinPath(ex.getPath());
@@ -80,7 +81,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex,
 																HttpHeaders headers,
-																HttpStatus status,
+																HttpStatusCode status,
 																WebRequest request) {
 
 		String path = joinPath(ex.getPath());
@@ -101,7 +102,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 																  HttpHeaders headers,
-																  HttpStatus status,
+																  HttpStatusCode status,
 																  WebRequest request) {
 
 		String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
@@ -168,11 +169,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
 															 Object body,
 															 HttpHeaders headers,
-															 HttpStatus status,
+															 HttpStatusCode status,
 															 WebRequest request) {
 
 		if (body == null) {
-			body = Problem.builder().title(status.getReasonPhrase()).status(status.value()).build();
+			body = Problem.builder()
+						  .title(HttpStatus.valueOf(status.value()).getReasonPhrase())
+						  .status(status.value())
+						  .build();
 		} else if (body instanceof String) {
 			body = Problem.builder().title((String) body).status(status.value()).build();
 		}
@@ -180,7 +184,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return super.handleExceptionInternal(ex, body, headers, status, request);
 	}
 
-	private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
+	private Problem.ProblemBuilder createProblemBuilder(HttpStatusCode status, ProblemType problemType, String detail) {
 
 		return Problem.builder()
 					  .status(status.value())

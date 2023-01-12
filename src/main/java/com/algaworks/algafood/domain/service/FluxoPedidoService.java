@@ -1,9 +1,8 @@
 package com.algaworks.algafood.domain.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service

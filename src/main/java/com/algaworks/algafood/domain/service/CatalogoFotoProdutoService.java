@@ -3,8 +3,6 @@ package com.algaworks.algafood.domain.service;
 import java.io.InputStream;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +11,7 @@ import com.algaworks.algafood.domain.model.FotoProduto;
 import com.algaworks.algafood.domain.repository.ProdutoRepository;
 import com.algaworks.algafood.domain.service.FotoStorageService.NovaFoto;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service

@@ -1,9 +1,9 @@
 package com.algaworks.algafood.domain.model;
 
 import static com.algaworks.algafood.domain.model.StatusPedido.CRIADO;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
 import static java.time.OffsetDateTime.now;
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -11,22 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.algaworks.algafood.domain.exception.NegocioException;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

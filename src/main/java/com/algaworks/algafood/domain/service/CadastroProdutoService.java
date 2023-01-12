@@ -2,9 +2,6 @@ package com.algaworks.algafood.domain.service;
 
 import java.util.Collection;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.api.model.ProdutoModel;
@@ -12,6 +9,8 @@ import com.algaworks.algafood.domain.exception.ProdutoNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Produto;
 import com.algaworks.algafood.domain.repository.ProdutoRepository;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @Service

@@ -2,8 +2,6 @@ package com.algaworks.algafood.domain.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
@@ -28,7 +26,6 @@ public class CadastroRestauranteService {
 
 	private FormaPagamentoRepository formaPagamentoRepository;
 
-	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Long cidadeId = restaurante.getEndereco().getCidade().getId();
@@ -42,24 +39,20 @@ public class CadastroRestauranteService {
 		return this.restauranteRepository.save(restaurante);
 	}
 
-	@Transactional
 	public void ativar(Long id) {
 		var restaurante = buscar(id);
 		restaurante.ativar();
 	}
 
-	@Transactional
 	public void ativar(List<Long> restaurantesId) {
 		restaurantesId.forEach(this::ativar);
 	}
 
-	@Transactional
 	public void inativar(Long id) {
 		var restaurante = buscar(id);
 		restaurante.inativar();
 	}
 
-	@Transactional
 	public void inativar(List<Long> restaurantesId) {
 		restaurantesId.forEach(this::inativar);
 	}
@@ -68,7 +61,6 @@ public class CadastroRestauranteService {
 		return restauranteRepository.findById(id).orElseThrow(() -> new RestauranteNaoEncontradoException(id));
 	}
 
-	@Transactional
 	public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
 		var restaurante = buscar(restauranteId);
 		var formaPagamento = formaPagamentoRepository.buscar(formaPagamentoId);
@@ -76,7 +68,6 @@ public class CadastroRestauranteService {
 		restaurante.adicionarFormaPagamento(formaPagamento);
 	}
 
-	@Transactional
 	public void desassociarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
 		var restaurante = buscar(restauranteId);
 		var formaPagamento = formaPagamentoRepository.buscar(formaPagamentoId);
@@ -84,19 +75,16 @@ public class CadastroRestauranteService {
 		restaurante.removerFormaPagamento(formaPagamento);
 	}
 
-	@Transactional
 	public void abrir(Long id) {
 		var restaurante = buscar(id);
 		restaurante.abrir();
 	}
 
-	@Transactional
 	public void fechar(Long id) {
 		var restaurante = buscar(id);
 		restaurante.fechar();
 	}
 
-	@Transactional
 	public void desassociarResponsavel(Long restauranteId, Long usuarioId) {
 		Restaurante restaurante = buscar(restauranteId);
 		Usuario usuario = cadastroUsuario.buscar(usuarioId);
@@ -104,7 +92,6 @@ public class CadastroRestauranteService {
 		restaurante.removerUsuario(usuario);
 	}
 
-	@Transactional
 	public void associarResponsavel(Long restauranteId, Long usuarioId) {
 		Restaurante restaurante = buscar(restauranteId);
 		Usuario usuario = cadastroUsuario.buscar(usuarioId);
