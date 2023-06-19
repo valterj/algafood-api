@@ -1,11 +1,13 @@
 package com.algaworks.algafood.api.controller;
 
+import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +34,8 @@ import com.algaworks.algafood.domain.service.CadastroCidadeService;
 @RequestMapping("/cidades")
 public class CidadeController {
 
+	private static final Logger logger = getLogger(CidadeController.class);
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
@@ -51,6 +55,9 @@ public class CidadeController {
 
 	@GetMapping("/{id}")
 	public CidadeModel buscar(@PathVariable Long id) {
+
+		logger.info("Buscando id: {}", id);
+
 		return cidadeModelAssembler.toModel(cadastroCidade.buscar(id), CidadeModel.class);
 	}
 
